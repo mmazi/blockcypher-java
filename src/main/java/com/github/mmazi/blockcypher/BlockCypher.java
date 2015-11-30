@@ -4,6 +4,7 @@ import com.github.mmazi.blockcypher.data.BlockCypherException;
 import com.github.mmazi.blockcypher.data.BlockCypherWallet;
 import com.github.mmazi.blockcypher.data.Confidence;
 import com.github.mmazi.blockcypher.data.Event;
+import com.github.mmazi.blockcypher.data.Transaction;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -76,6 +77,11 @@ public interface BlockCypher {
     @POST
     @Path("wallets/hd/{walletName}/addresses/derive")
     BlockCypherWallet deriveNewAddresses(@QueryParam("token") String token, @PathParam("walletName") String walletName, @QueryParam("count") Integer count)
+            throws IOException, BlockCypherException;
+
+    @GET
+    @Path("/txs/{txhash}")
+    Transaction getTransaction(@PathParam("txhash") String txhash)
             throws IOException, BlockCypherException;
 
     @GET

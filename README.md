@@ -22,3 +22,8 @@ In your pom.xml:
         <version>1.0-SNAPSHOT</version>
     </dependency>
 
+In your app:
+
+    BlockCypher bc = RestProxyFactory.createProxy(BlockCypher.class, "https://api.blockcypher.com");
+    String hash = "326da493913aa452d0bfe3ed641277ba87e38c0c220244075bae5a8c6442f9c9";
+    Transaction tx = bc.getTransaction(hash);
