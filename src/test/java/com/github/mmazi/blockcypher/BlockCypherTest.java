@@ -12,10 +12,19 @@ public class BlockCypherTest {
 
     @Test
     public void shouldGetTransaction() throws Exception {
-        final String hash = "326da493913aa452d0bfe3ed641277ba87e38c0c220244075bae5a8c6442f9c9";
-        final Transaction tx = bc.getTransaction(hash);
+        final String hash = "3c8897ce06418a00a880e9d465365e01119252dbdfa39ed5906c4195e7db2682";
+        final Transaction tx = bc.getTransaction(hash, false);
 
         assertThat(tx.getHash()).isEqualTo(hash);
-        assertThat(tx.getConfirmations()).isGreaterThan(1);
+        //assertThat(tx.getConfidence()).isNull(); // Currently still returned even with includeConfidence = false.
+    }
+
+    @Test
+    public void shouldGetTransactionWithConfidence() throws Exception {
+        final String hash = "3c8897ce06418a00a880e9d465365e01119252dbdfa39ed5906c4195e7db2682";
+        final Transaction tx = bc.getTransaction(hash, true);
+
+        assertThat(tx.getHash()).isEqualTo(hash);
+        assertThat(tx.getConfidence()).isNotNull();
     }
 }

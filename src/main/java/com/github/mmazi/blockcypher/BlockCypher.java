@@ -81,7 +81,7 @@ public interface BlockCypher {
 
     @GET
     @Path("/txs/{txhash}")
-    Transaction getTransaction(@PathParam("txhash") String txhash)
+    Transaction getTransaction(@PathParam("txhash") String txhash, @QueryParam("includeConfidence") Boolean includeConfidence)
             throws IOException, BlockCypherException;
 
     @GET
