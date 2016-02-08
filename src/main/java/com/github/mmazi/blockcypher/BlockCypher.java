@@ -1,5 +1,6 @@
 package com.github.mmazi.blockcypher;
 
+import com.github.mmazi.blockcypher.data.AddressBalance;
 import com.github.mmazi.blockcypher.data.BlockCypherException;
 import com.github.mmazi.blockcypher.data.BlockCypherWallet;
 import com.github.mmazi.blockcypher.data.Confidence;
@@ -88,5 +89,12 @@ public interface BlockCypher {
     @Path("/txs/{txhash}/confidence")
     Confidence getConfidence(@PathParam("txhash") String txhash)
             throws IOException, BlockCypherException;
+
+    // todo: this can also be used to get a BlockCypher Wallet balance
+    @GET
+    @Path("/addrs/{address}/balance")
+    AddressBalance getAddressBalance(@PathParam("address") String address)
+            throws IOException, BlockCypherException;
+
 
 }

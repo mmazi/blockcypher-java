@@ -1,12 +1,16 @@
 package com.github.mmazi.blockcypher;
 
+import com.github.mmazi.blockcypher.data.AddressBalance;
 import com.github.mmazi.blockcypher.data.Transaction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 import si.mazi.rescu.RestProxyFactory;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BlockCypherTest {
+    private static final Logger log = LoggerFactory.getLogger(BlockCypherTest.class);
 
     private BlockCypher bc = RestProxyFactory.createProxy(BlockCypher.class, "https://api.blockcypher.com");
 
@@ -26,5 +30,15 @@ public class BlockCypherTest {
 
         assertThat(tx.getHash()).isEqualTo(hash);
         assertThat(tx.getConfidence()).isNotNull();
+    }
+
+    @Test
+    public void shouldGetAddressBalance() throws Exception {
+        final AddressBalance balance = bc.getAddressBalance("173ujrhEVGqaZvPHXLqwXiSmPVMo225cqT");
+
+        log.debug("balance = {}", balance);
+
+        assertThat(balance.getAddress()).isEqualTo("173ujrhEVGqaZvPHXLqwXiSmPVMo225cqT");
+        assertThat(balance.getTotalReceived()).isGreaterThan(1000 * 100000000L);
     }
 }
