@@ -1,6 +1,6 @@
 package com.github.mmazi.blockcypher;
 
-import com.github.mmazi.blockcypher.data.AddressBalance;
+import com.github.mmazi.blockcypher.data.AddressInfo;
 import com.github.mmazi.blockcypher.data.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,11 +34,22 @@ public class BlockCypherTest {
 
     @Test
     public void shouldGetAddressBalance() throws Exception {
-        final AddressBalance balance = bc.getAddressBalance("173ujrhEVGqaZvPHXLqwXiSmPVMo225cqT");
+        final AddressInfo balance = bc.getAddressBalance("173ujrhEVGqaZvPHXLqwXiSmPVMo225cqT");
 
         log.debug("balance = {}", balance);
 
         assertThat(balance.getAddress()).isEqualTo("173ujrhEVGqaZvPHXLqwXiSmPVMo225cqT");
         assertThat(balance.getTotalReceived()).isGreaterThan(1000 * 100000000L);
+    }
+
+    @Test
+    public void shouldGetAddressInfo() throws Exception {
+        final AddressInfo addressInfo = bc.getAddressFullInfo("173ujrhEVGqaZvPHXLqwXiSmPVMo225cqT", null, null, 33, null, null, null, null);
+
+        log.debug("addressInfo = {}", addressInfo);
+
+        assertThat(addressInfo.getAddress()).isEqualTo("173ujrhEVGqaZvPHXLqwXiSmPVMo225cqT");
+        assertThat(addressInfo.getTotalReceived()).isGreaterThan(1000 * 100000000L);
+        assertThat(addressInfo.getTxs()).isNotNull().hasSize(33);
     }
 }

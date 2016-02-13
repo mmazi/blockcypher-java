@@ -1,6 +1,6 @@
 package com.github.mmazi.blockcypher;
 
-import com.github.mmazi.blockcypher.data.AddressBalance;
+import com.github.mmazi.blockcypher.data.AddressInfo;
 import com.github.mmazi.blockcypher.data.BlockCypherException;
 import com.github.mmazi.blockcypher.data.BlockCypherWallet;
 import com.github.mmazi.blockcypher.data.Confidence;
@@ -90,11 +90,32 @@ public interface BlockCypher {
     Confidence getConfidence(@PathParam("txhash") String txhash)
             throws IOException, BlockCypherException;
 
-    // todo: this can also be used to get a BlockCypher Wallet balance
+    // todo: The /addrs/{address}/ endpoints can also be used to get a BlockCypher Wallet balance
+    // by providing a wallet name in place of {address}.
+    /**
+     * Returns the balance data, but doesn't include txs.
+     */
     @GET
     @Path("/addrs/{address}/balance")
-    AddressBalance getAddressBalance(@PathParam("address") String address)
+    AddressInfo getAddressBalance(@PathParam("address") String address)
             throws IOException, BlockCypherException;
+
+    /**
+     * Includes txs.
+     */
+    @GET
+    @Path("/addrs/{address}/full")
+    AddressInfo getAddressFullInfo(
+            @PathParam("address") String address,
+            @QueryParam("before") Integer beforeBlockHeight,
+            @QueryParam("after") Integer afterBlockHeight,
+            @QueryParam("limit") Integer limitTxs,
+            @QueryParam("confirmations") Integer minConfirmations,
+            @QueryParam("includeHex") Boolean includeHex,
+            @QueryParam("includeConfidence") Boolean includeConfidence,
+            @QueryParam("omitWalletAddresses") Boolean omitWalletAddresses
+    ) throws IOException, BlockCypherException;
+
 
 
 }

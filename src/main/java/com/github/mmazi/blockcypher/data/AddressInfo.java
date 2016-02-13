@@ -3,8 +3,10 @@ package com.github.mmazi.blockcypher.data;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
+import java.util.List;
+
 @JsonNaming(PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy.class)
-public class AddressBalance {
+public class AddressInfo {
     private String address;
     private Long totalReceived;
     private Long totalSent;
@@ -14,6 +16,7 @@ public class AddressBalance {
     private Integer nTx;
     private Integer unconfirmedNTx;
     private Integer finalNTx;
+    private List<Transaction> txs;
 
     public String getAddress() {
         return address;
@@ -49,6 +52,10 @@ public class AddressBalance {
 
     public Integer getFinalNTx() {
         return finalNTx;
+    }
+
+    public List<Transaction> getTxs() {
+        return txs;
     }
 
     @Override
