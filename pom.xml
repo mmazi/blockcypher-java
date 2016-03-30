@@ -25,7 +25,7 @@
         <dependency>
             <groupId>com.github.mmazi</groupId>
             <artifactId>rescu</artifactId>
-            <version>1.7.3-SNAPSHOT</version>
+            <version>1.8.2-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
