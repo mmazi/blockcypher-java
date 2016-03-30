@@ -6,6 +6,7 @@ import com.github.mmazi.blockcypher.data.BlockCypherWallet;
 import com.github.mmazi.blockcypher.data.Confidence;
 import com.github.mmazi.blockcypher.data.Event;
 import com.github.mmazi.blockcypher.data.Transaction;
+import com.github.mmazi.blockcypher.data.WalletNames;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -17,7 +18,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
-import java.util.List;
 
 @Path("v1/btc/main")
 @Produces(MediaType.APPLICATION_JSON)
@@ -51,14 +51,20 @@ public interface BlockCypher {
     @GET
     @Path("wallets")
     @Produces(MediaType.APPLICATION_JSON)
-    List<String> listWalletNames(@QueryParam("token") String token)
+    WalletNames listWalletNames(@QueryParam("token") String token)
             throws IOException, BlockCypherException;
 
-    // todo! This doesn't work (conflicts with the get wallet by name endpoint)
+    /**
+     * This doesn't work (conflicts with the get wallet by name endpoint), though it is still documented
+     * and present in the official SDK (client implementations).
+     *
+     * @deprecated Use {@link #listWalletNames(String)} instead: it lists both normal and HD wallets.
+     */
     @GET
     @Path("wallets/hd")
     @Produces(MediaType.APPLICATION_JSON)
-    List<String> listHdWalletNames(@QueryParam("token") String token)
+    @Deprecated
+    WalletNames listHdWalletNames(@QueryParam("token") String token)
             throws IOException, BlockCypherException;
 
     @GET
