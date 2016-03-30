@@ -70,7 +70,7 @@ public interface BlockCypher {
     @GET
     @Path("wallets/hd/{walletName}")
     @Produces(MediaType.APPLICATION_JSON)
-    BlockCypherWallet getWallet(@QueryParam("token") String token, @PathParam("walletName") String walletName)
+    BlockCypherWallet getHdWallet(@QueryParam("token") String token, @PathParam("walletName") String walletName)
             throws IOException, BlockCypherException;
 
     @DELETE
