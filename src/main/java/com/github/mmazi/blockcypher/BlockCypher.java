@@ -86,10 +86,17 @@ public interface BlockCypher {
     BlockCypherWallet deriveNewAddresses(@QueryParam("token") String token, @PathParam("walletName") String walletName, @QueryParam("count") Integer count)
             throws IOException, BlockCypherException;
 
+    /**
+     * @param includeConfidence whether to return confidence info in the response.
+     * @param token token is required when includeConfidence is true.
+     */
     @GET
     @Path("/txs/{txhash}")
-    Transaction getTransaction(@PathParam("txhash") String txhash, @QueryParam("includeConfidence") Boolean includeConfidence)
-            throws IOException, BlockCypherException;
+    Transaction getTransaction(
+            @PathParam("txhash") String txhash,
+            @QueryParam("includeConfidence") Boolean includeConfidence,
+            @QueryParam("token") String token
+    ) throws IOException, BlockCypherException;
 
     @GET
     @Path("/txs/{txhash}/confidence")

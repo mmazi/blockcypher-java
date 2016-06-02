@@ -17,7 +17,7 @@ public class BlockCypherTest {
     @Test
     public void shouldGetTransaction() throws Exception {
         final String hash = "3c8897ce06418a00a880e9d465365e01119252dbdfa39ed5906c4195e7db2682";
-        final Transaction tx = bc.getTransaction(hash, false);
+        final Transaction tx = bc.getTransaction(hash, false, null);
 
         assertThat(tx.getHash()).isEqualTo(hash);
         //assertThat(tx.getConfidence()).isNull(); // Currently still returned even with includeConfidence = false.
@@ -26,7 +26,7 @@ public class BlockCypherTest {
     @Test
     public void shouldGetTransactionWithConfidence() throws Exception {
         final String hash = "3c8897ce06418a00a880e9d465365e01119252dbdfa39ed5906c4195e7db2682";
-        final Transaction tx = bc.getTransaction(hash, true);
+        final Transaction tx = bc.getTransaction(hash, true, "token");
 
         assertThat(tx.getHash()).isEqualTo(hash);
         assertThat(tx.getConfidence()).isNotNull();
