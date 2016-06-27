@@ -21,6 +21,7 @@ public class BlockCypherWallet {
     private String extendedPublicKey;
     private List<Integer> subchainIndexes = Arrays.asList(0, 1);
     private List<SubChain> chains = Arrays.asList(new SubChain(0), new SubChain(1));
+    private List<String> addresses;
 
     protected BlockCypherWallet() { }
 
@@ -54,8 +55,12 @@ public class BlockCypherWallet {
     }
 
     @JsonIgnore(true)
-    public Collection<String> getAddresses() {
+    public Collection<String> getAddressesFromChains() {
         return Sets.newHashSet(Iterables.concat(Iterables.transform(chains, SubChain.ADDRS)));
+    }
+
+    public List<String> getAddresses() {
+        return addresses;
     }
 
     @Override

@@ -19,7 +19,8 @@ public class BlockCypherJsonTest {
         assertThat(wallet.getName()).isEqualTo("MM_Electrum_TEST");
         assertThat(wallet.getToken()).isEqualTo("ffffffffffffffffffffffffffffff");
         assertThat(wallet.isHd()).isTrue();
-        assertThat(wallet.getAddresses()).hasSize(18);
+        assertThat(wallet.getAddressesFromChains()).hasSize(18);
+        assertThat(wallet.getAddresses()).isNull();
         assertThat(wallet.getChains()).hasSize(2);
         assertThat(wallet.getChains().get(1).getChainAddresses()).hasSize(15);
         assertThat(wallet.getChains().get(1).getChainAddresses().get(0).getAddress()).isEqualTo("13uMLSzTg8nJSKFMabaqBS5MKJ8saByA35");
