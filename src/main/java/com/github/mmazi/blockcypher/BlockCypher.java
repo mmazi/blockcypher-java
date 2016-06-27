@@ -23,6 +23,10 @@ import java.io.IOException;
 @Produces(MediaType.APPLICATION_JSON)
 public interface BlockCypher {
 
+    @GET
+    @Path("hooks")
+    Event[] listHooks(@QueryParam("token") String token) throws IOException, BlockCypherException;
+
     @POST
     @Path("hooks")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -38,20 +42,16 @@ public interface BlockCypher {
             throws IOException, BlockCypherException;
 
     @GET
-    @Path("hooks")
-    Event[] listHooks(@QueryParam("token") String token) throws IOException, BlockCypherException;
+    @Path("wallets")
+    @Produces(MediaType.APPLICATION_JSON)
+    WalletNames listWalletNames(@QueryParam("token") String token)
+            throws IOException, BlockCypherException;
 
     @POST
     @Path("wallets/hd")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     BlockCypherWallet registerHdWallet(@QueryParam("token") String token, BlockCypherWallet wallet)
-            throws IOException, BlockCypherException;
-
-    @GET
-    @Path("wallets")
-    @Produces(MediaType.APPLICATION_JSON)
-    WalletNames listWalletNames(@QueryParam("token") String token)
             throws IOException, BlockCypherException;
 
     /**
