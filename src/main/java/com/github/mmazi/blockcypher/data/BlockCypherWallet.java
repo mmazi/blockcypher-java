@@ -16,18 +16,35 @@ import java.util.List;
 public class BlockCypherWallet {
 
     private String name;
-    private Boolean hd = true;
+    private Boolean hd;
     private String token;
     private String extendedPublicKey;
-    private List<Integer> subchainIndexes = Arrays.asList(0, 1);
-    private List<SubChain> chains = Arrays.asList(new SubChain(0), new SubChain(1));
+    private List<Integer> subchainIndexes;
+    private List<SubChain> chains;
     private List<String> addresses;
 
-    protected BlockCypherWallet() { }
+    protected BlockCypherWallet() {
+    }
+
+    public BlockCypherWallet(String name, boolean hd) {
+        this.name = name;
+        this.hd = hd;
+        if (hd) {
+            subchainIndexes = Arrays.asList(0, 1);
+            chains = Arrays.asList(new SubChain(0), new SubChain(1));
+        }
+    }
 
     public BlockCypherWallet(String name, String extendedPublicKey) {
-        this.name = name;
+        this(name, true);
         this.extendedPublicKey = extendedPublicKey;
+    }
+
+    public static BlockCypherWallet addresses(List<String> addresses) {
+        BlockCypherWallet addrOnly = new BlockCypherWallet();
+        addrOnly.hd = false;
+        addrOnly.addresses = addresses;
+        return addrOnly;
     }
 
     public String getName() {
@@ -54,7 +71,7 @@ public class BlockCypherWallet {
         return token;
     }
 
-    @JsonIgnore(true)
+    @JsonIgnore
     public Collection<String> getAddressesFromChains() {
         return Sets.newHashSet(Iterables.concat(Iterables.transform(chains, SubChain.ADDRS)));
     }

@@ -1,18 +1,37 @@
 package com.github.mmazi.blockcypher;
 
 import com.github.mmazi.blockcypher.data.AddressInfo;
+import com.github.mmazi.blockcypher.data.BlockCypherException;
 import com.github.mmazi.blockcypher.data.Transaction;
+import org.assertj.core.api.ThrowableAssert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 import si.mazi.rescu.RestProxyFactory;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 public class BlockCypherTest {
     private static final Logger log = LoggerFactory.getLogger(BlockCypherTest.class);
+    private static final String TOKEN = "67a052c824cf4455bc58b3e4c0e3fd0b";
 
     private BlockCypher bc = RestProxyFactory.createProxy(BlockCypher.class, "https://api.blockcypher.com");
+
+    @SuppressWarnings("ThrowableResultOfMethodCallIgnored")
+    @Test
+    public void getWalletShouldFailWithNonexistentWalletName() throws Exception {
+        BlockCypherException throwable = (BlockCypherException)catchThrowable(new ThrowableAssert.ThrowingCallable() {
+            public void call() throws Throwable {
+                bc.getWallet("no-such-wallet", TOKEN);
+            }
+        });
+        assertThat(throwable)
+                .isInstanceOf(BlockCypherException.class)
+                .hasMessageContaining("Wallet not found");
+
+        assertThat(throwable.getHttpStatusCode()).isEqualTo(404);
+    }
 
     @Test
     public void shouldGetTransaction() throws Exception {
@@ -26,7 +45,7 @@ public class BlockCypherTest {
     @Test
     public void shouldGetTransactionWithConfidence() throws Exception {
         final String hash = "3c8897ce06418a00a880e9d465365e01119252dbdfa39ed5906c4195e7db2682";
-        final Transaction tx = bc.getTransaction(hash, true, "token");
+        final Transaction tx = bc.getTransaction(hash, true, TOKEN);
 
         assertThat(tx.getHash()).isEqualTo(hash);
         assertThat(tx.getConfidence()).isNotNull();

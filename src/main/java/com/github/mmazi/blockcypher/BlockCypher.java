@@ -47,6 +47,58 @@ public interface BlockCypher {
     WalletNames listWalletNames(@QueryParam("token") String token)
             throws IOException, BlockCypherException;
 
+    @GET
+    @Path("wallets/{name}")
+    @Produces(MediaType.APPLICATION_JSON)
+    BlockCypherWallet getWallet(@PathParam("name") String walletName, @QueryParam("token") String token)
+            throws IOException, BlockCypherException;
+
+    /**
+     * @param wallet For normal wallets, at minimum, you must include the name attribute and at least one public address in the addresses array.
+     */
+    @POST
+    @Path("wallets")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    BlockCypherWallet registerWallet(@QueryParam("token") String token, BlockCypherWallet wallet)
+            throws IOException, BlockCypherException;
+
+    /**
+     * This endpoint returns a list of the addresses associated with the $NAME wallet. It returns the addresses in a partially filled out Wallet
+     * which you’ll find under the addresses attribute. For HD wallets it returns an HDChain object.
+     *
+     * @param used Returns only used addresses if set to true and only unused if false.
+     * @param zeroBalance Returns only addresses with zero balance if set to true and only addresses with non-zero balance if false.
+     */
+    @GET
+    @Path("wallets/{name}/addresses")
+    @Produces(MediaType.APPLICATION_JSON)
+    BlockCypherWallet getWalletAddresses(
+            @PathParam("name") String walletName,
+            @QueryParam("token") String token,
+            @QueryParam("used") Boolean used,
+            @QueryParam("zerobalance") Boolean zeroBalance
+    ) throws IOException, BlockCypherException;
+
+    /**
+     * This endpoint allows you to add public addresses to the {name} wallet, by POSTing a partially filled out Wallet object.
+     * You only need to include the additional addresses in a new addresses array in the object. If successful, it will return the newly
+     * modified Wallet, including an up-to-date, complete listing of addresses.
+     *
+     * @param addresses only the addresses property of the wallet is used as the new addresses to be added.
+     * @param omitWalletAddresses omit addresses in the returned object
+     */
+    @POST
+    @Path("wallets/{name}/addresses")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    BlockCypherWallet addWalletAddresses(
+            @PathParam("name") String walletName,
+            @QueryParam("token") String token,
+            @QueryParam("omitWalletAddresses") Boolean omitWalletAddresses,
+            BlockCypherWallet addresses
+    ) throws IOException, BlockCypherException;
+
     @POST
     @Path("wallets/hd")
     @Consumes(MediaType.APPLICATION_JSON)
