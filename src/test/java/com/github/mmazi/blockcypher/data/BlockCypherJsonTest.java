@@ -28,6 +28,16 @@ public class BlockCypherJsonTest {
         assertThat(wallet.getChains().get(1).getChainAddresses().get(0).getPublic()).isNullOrEmpty();
     }
 
+    @Test
+    public void shouldDeserializeTxSkeleton() throws Exception {
+        TxSkeleton txSkeleton = parse(TxSkeleton.class);
+        assertThat(txSkeleton.getTosign()).hasSize(1);
+        assertThat(txSkeleton.getTosign()[0].get()).hasSize(11);
+        assertThat(txSkeleton.getTosign()[0].get()[0]).isEqualTo(Integer.decode("0x97").byteValue());
+        assertThat(txSkeleton.getTosign()[0].get()[10]).isEqualTo(Integer.decode("0xf4").byteValue());
+        assertThat(txSkeleton.getErrors().get(0).getError()).isEqualTo("unspecified error");
+    }
+
     private static ObjectMapper createMapper() {
         final ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);

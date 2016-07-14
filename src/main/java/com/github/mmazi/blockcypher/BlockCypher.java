@@ -6,6 +6,7 @@ import com.github.mmazi.blockcypher.data.BlockCypherWallet;
 import com.github.mmazi.blockcypher.data.Confidence;
 import com.github.mmazi.blockcypher.data.Event;
 import com.github.mmazi.blockcypher.data.Transaction;
+import com.github.mmazi.blockcypher.data.TxSkeleton;
 import com.github.mmazi.blockcypher.data.WalletNames;
 
 import javax.ws.rs.Consumes;
@@ -154,6 +155,17 @@ public interface BlockCypher {
     @Path("/txs/{txhash}/confidence")
     Confidence getConfidence(@PathParam("txhash") String txhash)
             throws IOException, BlockCypherException;
+
+    @POST
+    @Path("/txs/new")
+    @Consumes(MediaType.APPLICATION_JSON)
+    TxSkeleton newTransaction(Transaction skeleton, @QueryParam("includeToSignTx") boolean includeToSignTx)
+            throws IOException, BlockCypherException;
+
+    @POST
+    @Path("/txs/send")
+    @Consumes(MediaType.APPLICATION_JSON)
+    TxSkeleton sendTransaction(TxSkeleton skeleton) throws IOException, BlockCypherException;
 
     // todo: The /addrs/{address}/ endpoints can also be used to get a BlockCypher Wallet balance
     // by providing a wallet name in place of {address}.

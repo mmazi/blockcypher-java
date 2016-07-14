@@ -1,5 +1,6 @@
 package com.github.mmazi.blockcypher.data;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
@@ -21,6 +22,7 @@ import java.util.Arrays;
  * @author <a href="mailto:seb.auvray@gmail.com">Sebastien Auvray</a>
  */
 @JsonNaming(PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy.class)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Input {
 
     private String prevHash;
@@ -31,6 +33,10 @@ public class Input {
     private String scriptType;
 
     protected Input() { }
+
+    Input(String[] addresses) {
+        this.addresses = addresses;
+    }
 
     public String getPrevHash() {
         return prevHash;

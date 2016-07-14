@@ -1,10 +1,13 @@
 package com.github.mmazi.blockcypher.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Representation of a Transaction, ie:
@@ -73,6 +76,7 @@ import java.util.Date;
  * @author <a href="mailto:seb.auvray@gmail.com">Sebastien Auvray</a>
  */
 @JsonNaming(PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy.class)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Transaction {
 
     private String hash;
@@ -103,6 +107,17 @@ public class Transaction {
     private Output[] outputs;
 
     protected Transaction() { }
+
+    public static Transaction newTransaction(List<String> inputAddresses, String outputAddress, long outputValue, Preference preference) {
+        Transaction tx = new Transaction();
+        tx.inputs = new Input[inputAddresses.size()];
+        tx.outputs = new Output[] { new Output(outputValue, new String[]{outputAddress}) };
+        for (int i = 0; i < inputAddresses.size(); i++) {
+            tx.inputs[i] = new Input(new String[]{inputAddresses.get(i)});
+        }
+        tx.preference = preference.name();
+        return tx;
+    }
 
     public String getHash() {
         return hash;
@@ -136,8 +151,14 @@ public class Transaction {
         return confirmed;
     }
 
+    @JsonIgnore
     public Date getReceived() {
         return received;
+    }
+
+    @JsonIgnore(false)
+    protected void setReceived(Date received) {
+        this.received = received;
     }
 
     public Integer getVer() {
@@ -187,6 +208,8 @@ public class Transaction {
     public Output[] getOutputs() {
         return outputs;
     }
+
+    public enum Preference { high, medium, low }
 
     @Override
     public String toString() {

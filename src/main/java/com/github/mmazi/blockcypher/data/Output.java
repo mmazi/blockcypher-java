@@ -1,5 +1,6 @@
 package com.github.mmazi.blockcypher.data;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
@@ -19,6 +20,7 @@ import java.util.Arrays;
  * @author <a href="mailto:seb.auvray@gmail.com">Sebastien Auvray</a>
  */
 @JsonNaming(PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy.class)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Output {
 
     private Long value;
@@ -28,6 +30,11 @@ public class Output {
     private String scriptType;
 
     protected Output() { }
+
+    Output(Long value, String[] addresses) {
+        this.value = value;
+        this.addresses = addresses;
+    }
 
     public Long getValue() {
         return value;
