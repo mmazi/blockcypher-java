@@ -35,7 +35,12 @@ public class BlockCypherJsonTest {
         assertThat(txSkeleton.getTosign()[0].get()).hasSize(11);
         assertThat(txSkeleton.getTosign()[0].get()[0]).isEqualTo(Integer.decode("0x97").byteValue());
         assertThat(txSkeleton.getTosign()[0].get()[10]).isEqualTo(Integer.decode("0xf4").byteValue());
-        assertThat(txSkeleton.getErrors().get(0).getError()).isEqualTo("unspecified error");
+    }
+
+    @Test
+    public void shouldDeserializeException() throws Exception {
+        BlockCypherException ex = parse(BlockCypherException.class);
+        assertThat(ex).hasMessageContaining("Output exceeds max money value");
     }
 
     private static ObjectMapper createMapper() {

@@ -15,7 +15,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import javax.annotation.Nullable;
 import javax.xml.bind.DatatypeConverter;
 import java.io.IOException;
-import java.util.List;
 
 @JsonNaming(PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -27,7 +26,6 @@ public class TxSkeleton {
     private Bytes[] pubkeys;
     @Nullable
     private Bytes[] tosignTx;
-    private List<Error> errors;
 
     protected TxSkeleton() { }
 
@@ -56,22 +54,12 @@ public class TxSkeleton {
         return tosignTx;
     }
 
-    public List<Error> getErrors() {
-        return errors;
-    }
-
     public Bytes[] getSignatures() {
         return signatures;
     }
 
     public Bytes[] getPubkeys() {
         return pubkeys;
-    }
-
-    public static class Error {
-        private String error;
-        public String getError() { return error; }
-        @Override public String toString() { return error; }
     }
 
     @JsonDeserialize(using = Bytes.Deserializer.class)
