@@ -38,6 +38,19 @@ public class BlockCypherJsonTest {
     }
 
     @Test
+    public void shouldDeserializeTransaction() throws Exception {
+        Transaction tx = parse(Transaction.class);
+        assertThat(tx.getBlockHash()).isEqualTo("000000000000000003e41e1329997acbf1849f21eef94cefec2eaa3f94ff1360");
+        assertThat(tx.getHash()).isEqualTo("3c8897ce06418a00a880e9d465365e01119252dbdfa39ed5906c4195e7db2682");
+        assertThat(tx.getHash()).isEqualTo("3c8897ce06418a00a880e9d465365e01119252dbdfa39ed5906c4195e7db2682");
+        assertThat(tx.getTotal()).isEqualTo(63380642);
+        assertThat(tx.getFees()).isEqualTo(30000);
+        assertThat(tx.isDoubleSpend()).isFalse();
+        assertThat(tx.getConfirmed()).isInThePast();
+        assertThat(tx.getReceived()).isInThePast();
+    }
+
+    @Test
     public void shouldDeserializeException() throws Exception {
         BlockCypherException ex = parse(BlockCypherException.class);
         assertThat(ex).hasMessageContaining("Output exceeds max money value");

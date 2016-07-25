@@ -49,6 +49,8 @@ public class BlockCypherTest {
         final Transaction tx = bc.getTransaction(hash, false, null);
 
         assertThat(tx.getHash()).isEqualTo(hash);
+        assertThat(tx.getConfirmed()).isInThePast();
+        assertThat(tx.getReceived()).isInThePast();
         //assertThat(tx.getConfidence()).isNull(); // Currently still returned even with includeConfidence = false.
     }
 
@@ -58,6 +60,7 @@ public class BlockCypherTest {
         final Transaction tx = bc.getTransaction(hash, true, TOKEN);
 
         assertThat(tx.getHash()).isEqualTo(hash);
+        assertThat(tx.getReceived()).isInThePast();
         assertThat(tx.getConfidence()).isNotNull();
     }
 
