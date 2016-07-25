@@ -96,9 +96,14 @@ public class BlockCypherTest {
         Transaction tx = Transaction.newTransaction(inputAddresses, "1LUJshaMHcArBDN8AM4bviKFVVRhSo73rB", 1000, Transaction.Preference.high);
         TxSkeleton txSkeleton = bc.newTransaction(tx, true);
 
-        byte[] signature = key.sign(Sha256Hash.wrap(txSkeleton.getTosign()[0].get())).encodeToDER();
+        TxSkeleton.Bytes[] toSign = txSkeleton.getTosign();
+        TxSkeleton.Bytes[] signatures = new TxSkeleton.Bytes[toSign.length];
+        for (int i = 0; i < toSign.length; i++) {
+            byte[] signature = key.sign(Sha256Hash.wrap(toSign[i].get())).encodeToDER();
+            signatures[i] = new TxSkeleton.Bytes(signature);
+        }
 
-        txSkeleton.setSignatures(new TxSkeleton.Bytes[]{new TxSkeleton.Bytes(signature)});
+        txSkeleton.setSignatures(signatures);
         txSkeleton.setPubkeys(new TxSkeleton.Bytes[]{new TxSkeleton.Bytes(key.getPubKey())});
 
         bc.sendTransaction(txSkeleton);
