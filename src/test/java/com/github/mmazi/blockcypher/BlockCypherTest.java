@@ -26,7 +26,7 @@ public class BlockCypherTest {
     private static final Logger log = LoggerFactory.getLogger(BlockCypherTest.class);
     private static final String TOKEN = "67a052c824cf4455bc58b3e4c0e3fd0b";
 
-    private BlockCypher bc = RestProxyFactory.createProxy(BlockCypher.class, "https://api.blockcypher.com");
+    private BlockCypher bc = RestProxyFactory.createProxy(BlockCypher.class, "https://api.blockcypher.com/v1/btc/main/");
 
     @SuppressWarnings("ThrowableResultOfMethodCallIgnored")
     @Test
