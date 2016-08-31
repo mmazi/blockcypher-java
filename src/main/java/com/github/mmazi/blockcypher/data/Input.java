@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
+import java.math.BigInteger;
 import java.util.Arrays;
 
 /**
@@ -26,9 +27,9 @@ import java.util.Arrays;
 public class Input {
 
     private String prevHash;
-    private Long outputIndex;
+    private BigInteger outputIndex;
     private String script;
-    private Long outputValue;
+    private BigInteger outputValue;
     private String[] addresses;
     private String scriptType;
 
@@ -42,7 +43,7 @@ public class Input {
         return prevHash;
     }
 
-    public Long getOutputIndex() {
+    public BigInteger getOutputIndex() {
         return outputIndex;
     }
 
@@ -50,7 +51,7 @@ public class Input {
         return script;
     }
 
-    public Long getOutputValue() {
+    public BigInteger getOutputValue() {
         return outputValue;
     }
 

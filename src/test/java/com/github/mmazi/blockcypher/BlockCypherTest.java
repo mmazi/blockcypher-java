@@ -16,6 +16,7 @@ import org.spongycastle.util.encoders.Hex;
 import org.testng.annotations.Test;
 import si.mazi.rescu.RestProxyFactory;
 
+import java.math.BigInteger;
 import java.util.Collections;
 import java.util.List;
 
@@ -71,7 +72,7 @@ public class BlockCypherTest {
         log.debug("balance = {}", balance);
 
         assertThat(balance.getAddress()).isEqualTo("173ujrhEVGqaZvPHXLqwXiSmPVMo225cqT");
-        assertThat(balance.getTotalReceived()).isGreaterThan(1000 * 100000000L);
+        assertThat(balance.getTotalReceived()).isGreaterThan(new BigInteger("100000000000"));
     }
 
     @Test
@@ -81,7 +82,7 @@ public class BlockCypherTest {
         log.debug("addressInfo = {}", addressInfo);
 
         assertThat(addressInfo.getAddress()).isEqualTo("173ujrhEVGqaZvPHXLqwXiSmPVMo225cqT");
-        assertThat(addressInfo.getTotalReceived()).isGreaterThan(1000 * 100000000L);
+        assertThat(addressInfo.getTotalReceived()).isGreaterThan(new BigInteger("100000000000"));
         assertThat(addressInfo.getTxs()).isNotNull().hasSize(33);
     }
 
@@ -92,7 +93,7 @@ public class BlockCypherTest {
         log.debug("addressInfo = {}", addressInfo);
 
         assertThat(addressInfo.getAddress()).isEqualTo("3KbWWjumBGLBUWYCeidydxe1uET9QyWoEg");
-        assertThat(addressInfo.getTotalReceived()).isGreaterThan(100 * 100000000L);
+        assertThat(addressInfo.getTotalReceived()).isGreaterThan(new BigInteger("10000000000"));
         assertThat(addressInfo.getTxrefs()).isNotNull().hasSize(33);
     }
 
@@ -107,7 +108,7 @@ public class BlockCypherTest {
         log.debug("inputAddress = {}", inputAddress);
 
         List<String> inputAddresses = Collections.singletonList(inputAddress);
-        Transaction tx = Transaction.newTransaction(inputAddresses, "1LUJshaMHcArBDN8AM4bviKFVVRhSo73rB", 1000, Transaction.Preference.high);
+        Transaction tx = Transaction.newTransaction(inputAddresses, "1LUJshaMHcArBDN8AM4bviKFVVRhSo73rB", new BigInteger("1000"), Transaction.Preference.high);
         TxSkeleton txSkeleton = bc.newTransaction(tx, true);
 
         TxSkeleton.Bytes[] toSign = txSkeleton.getTosign();

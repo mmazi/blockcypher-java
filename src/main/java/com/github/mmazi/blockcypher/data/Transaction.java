@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -86,13 +87,13 @@ public class Transaction {
 
     private String[] addresses;
 
-    private Long total;
-    private Long fees;
+    private BigInteger total;
+    private BigInteger fees;
     private String relayedBy;
     private Date confirmed;
     private Date received;
     private Integer ver;
-    private Long lockTime;
+    private BigInteger lockTime;
     private Integer vinSz;
     private Integer voutSz;
     private Integer confirmations;
@@ -109,7 +110,7 @@ public class Transaction {
 
     protected Transaction() { }
 
-    public static Transaction newTransaction(List<String> inputAddresses, String outputAddress, long outputValue, Preference preference) {
+    public static Transaction newTransaction(List<String> inputAddresses, String outputAddress, BigInteger outputValue, Preference preference) {
         Transaction tx = new Transaction();
         tx.inputs = new Input[inputAddresses.size()];
         tx.outputs = new Output[] { new Output(outputValue, new String[]{outputAddress}) };
@@ -136,11 +137,11 @@ public class Transaction {
         return addresses;
     }
 
-    public Long getTotal() {
+    public BigInteger getTotal() {
         return total;
     }
 
-    public Long getFees() {
+    public BigInteger getFees() {
         return fees;
     }
 
@@ -166,7 +167,7 @@ public class Transaction {
         return ver;
     }
 
-    public Long getLockTime() {
+    public BigInteger getLockTime() {
         return lockTime;
     }
 

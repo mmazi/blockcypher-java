@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
+import java.math.BigInteger;
 import java.util.Arrays;
 
 /**
@@ -23,7 +24,7 @@ import java.util.Arrays;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Output {
 
-    private Long value;
+    private BigInteger value;
     private String script;
     private String spentBy;
     private String[] addresses;
@@ -31,12 +32,12 @@ public class Output {
 
     protected Output() { }
 
-    Output(Long value, String[] addresses) {
+    Output(BigInteger value, String[] addresses) {
         this.value = value;
         this.addresses = addresses;
     }
 
-    public Long getValue() {
+    public BigInteger getValue() {
         return value;
     }
 

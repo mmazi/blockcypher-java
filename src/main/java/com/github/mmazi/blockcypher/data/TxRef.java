@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
+import java.math.BigInteger;
 import java.util.Date;
 
 @JsonNaming(PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy.class)
@@ -14,8 +15,8 @@ public class TxRef {
     private Integer blockHeight; // 427653,
     private Integer txInputN; // -1,
     private Integer txOutputN; // 0,
-    private Long value; // 1101019180,
-    private Long refBalance; // 83891846588,
+    private BigInteger value; // 1101019180,
+    private BigInteger refBalance; // 83891846588,
     private Boolean spent; // false,
     private Integer confirmations; // 1,
     private Date confirmed; // "2016-08-31T10:59:03Z",
@@ -37,11 +38,11 @@ public class TxRef {
         return txOutputN;
     }
 
-    public Long getValue() {
+    public BigInteger getValue() {
         return value;
     }
 
-    public Long getRefBalance() {
+    public BigInteger getRefBalance() {
         return refBalance;
     }
 

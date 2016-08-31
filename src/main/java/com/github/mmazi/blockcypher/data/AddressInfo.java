@@ -3,16 +3,17 @@ package com.github.mmazi.blockcypher.data;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
+import java.math.BigInteger;
 import java.util.List;
 
 @JsonNaming(PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy.class)
 public class AddressInfo {
     private String address;
-    private Long totalReceived;
-    private Long totalSent;
-    private Long balance;
-    private Long unconfirmedBalance;
-    private Long finalBalance;
+    private BigInteger totalReceived;
+    private BigInteger totalSent;
+    private BigInteger balance;
+    private BigInteger unconfirmedBalance;
+    private BigInteger finalBalance;
     private Integer nTx;
     private Integer unconfirmedNTx;
     private Integer finalNTx;
@@ -23,23 +24,23 @@ public class AddressInfo {
         return address;
     }
 
-    public Long getTotalReceived() {
+    public BigInteger getTotalReceived() {
         return totalReceived;
     }
 
-    public Long getTotalSent() {
+    public BigInteger getTotalSent() {
         return totalSent;
     }
 
-    public Long getBalance() {
+    public BigInteger getBalance() {
         return balance;
     }
 
-    public Long getUnconfirmedBalance() {
+    public BigInteger getUnconfirmedBalance() {
         return unconfirmedBalance;
     }
 
-    public Long getFinalBalance() {
+    public BigInteger getFinalBalance() {
         return finalBalance;
     }
 
