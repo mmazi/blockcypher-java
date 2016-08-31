@@ -178,7 +178,22 @@ public interface BlockCypher {
             throws IOException, BlockCypherException;
 
     /**
-     * Includes txs.
+     * Includes basic tx info.
+     */
+    @GET
+    @Path("/addrs/{address}")
+    AddressInfo getAddressInfo(
+            @PathParam("address") String address,
+            @QueryParam("before") Integer beforeBlockHeight,
+            @QueryParam("after") Integer afterBlockHeight,
+            @QueryParam("limit") Integer limitTxs,
+            @QueryParam("confirmations") Integer minConfirmations,
+            @QueryParam("includeConfidence") Boolean includeConfidence,
+            @QueryParam("omitWalletAddresses") Boolean omitWalletAddresses
+    ) throws IOException, BlockCypherException;
+
+    /**
+     * Includes full tx info.
      */
     @GET
     @Path("/addrs/{address}/full")

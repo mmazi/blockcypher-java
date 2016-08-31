@@ -17,6 +17,7 @@ public class AddressInfo {
     private Integer unconfirmedNTx;
     private Integer finalNTx;
     private List<Transaction> txs;
+    private List<TxRef> txrefs;
 
     public String getAddress() {
         return address;
@@ -56,6 +57,10 @@ public class AddressInfo {
 
     public List<Transaction> getTxs() {
         return txs;
+    }
+
+    public List<TxRef> getTxrefs() {
+        return txrefs;
     }
 
     @Override

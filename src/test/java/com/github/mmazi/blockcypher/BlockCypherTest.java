@@ -75,7 +75,7 @@ public class BlockCypherTest {
     }
 
     @Test
-    public void shouldGetAddressInfo() throws Exception {
+    public void shouldGetAddressFullInfo() throws Exception {
         final AddressInfo addressInfo = bc.getAddressFullInfo("173ujrhEVGqaZvPHXLqwXiSmPVMo225cqT", null, null, 33, null, null, null, null);
 
         log.debug("addressInfo = {}", addressInfo);
@@ -83,6 +83,17 @@ public class BlockCypherTest {
         assertThat(addressInfo.getAddress()).isEqualTo("173ujrhEVGqaZvPHXLqwXiSmPVMo225cqT");
         assertThat(addressInfo.getTotalReceived()).isGreaterThan(1000 * 100000000L);
         assertThat(addressInfo.getTxs()).isNotNull().hasSize(33);
+    }
+
+    @Test
+    public void shouldGetAddressInfo() throws Exception {
+        final AddressInfo addressInfo = bc.getAddressInfo("3KbWWjumBGLBUWYCeidydxe1uET9QyWoEg", null, null, 33, null, null, null);
+
+        log.debug("addressInfo = {}", addressInfo);
+
+        assertThat(addressInfo.getAddress()).isEqualTo("3KbWWjumBGLBUWYCeidydxe1uET9QyWoEg");
+        assertThat(addressInfo.getTotalReceived()).isGreaterThan(100 * 100000000L);
+        assertThat(addressInfo.getTxrefs()).isNotNull().hasSize(33);
     }
 
     @Test(enabled = false)
