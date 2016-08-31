@@ -8,6 +8,7 @@ import com.github.mmazi.blockcypher.data.Event;
 import com.github.mmazi.blockcypher.data.Transaction;
 import com.github.mmazi.blockcypher.data.TxSkeleton;
 import com.github.mmazi.blockcypher.data.WalletNames;
+import com.google.common.base.Joiner;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -19,6 +20,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.List;
 
 @Path("/")
 @Produces(MediaType.APPLICATION_JSON)
@@ -151,6 +154,18 @@ public interface BlockCypher {
             @QueryParam("token") String token
     ) throws IOException, BlockCypherException;
 
+    /**
+     * @param includeConfidence whether to return confidence info in the response.
+     * @param token token is required when includeConfidence is true.
+     */
+    @GET
+    @Path("/txs/{txhash}")
+    List<Transaction> getTransactions(
+            @PathParam("txhash") Strings txhashes,
+            @QueryParam("includeConfidence") Boolean includeConfidence,
+            @QueryParam("token") String token
+    ) throws IOException, BlockCypherException;
+
     @GET
     @Path("/txs/{txhash}/confidence")
     Confidence getConfidence(@PathParam("txhash") String txhash)
@@ -209,5 +224,19 @@ public interface BlockCypher {
     ) throws IOException, BlockCypherException;
 
 
+    class Strings {
+        public final Collection<String> strings;
+        private final String joined;
+
+        public Strings(Collection<String> strings) {
+            this.strings = strings;
+            joined = Joiner.on(';').join(strings);
+        }
+
+        @Override
+        public String toString() {
+            return joined;
+        }
+    }
 
 }

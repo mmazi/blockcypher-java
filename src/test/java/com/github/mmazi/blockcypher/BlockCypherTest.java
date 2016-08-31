@@ -17,6 +17,7 @@ import org.testng.annotations.Test;
 import si.mazi.rescu.RestProxyFactory;
 
 import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -53,6 +54,15 @@ public class BlockCypherTest {
         assertThat(tx.getConfirmed()).isInThePast();
         assertThat(tx.getReceived()).isInThePast();
         //assertThat(tx.getConfidence()).isNull(); // Currently still returned even with includeConfidence = false.
+    }
+
+    @Test
+    public void shouldGetTransactions() throws Exception {
+        final List<Transaction> tx = bc.getTransactions(new BlockCypher.Strings(
+                Arrays.asList("3c8897ce06418a00a880e9d465365e01119252dbdfa39ed5906c4195e7db2682", "3c8897ce06418a00a880e9d465365e01119252dbdfa39ed5906c4195e7db2682")
+        ), false, null);
+
+        assertThat(tx).hasSize(2);
     }
 
     @Test
