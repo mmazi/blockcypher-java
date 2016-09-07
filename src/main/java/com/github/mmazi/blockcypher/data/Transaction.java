@@ -10,6 +10,7 @@ import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Representation of a Transaction, ie:
@@ -110,12 +111,16 @@ public class Transaction {
 
     protected Transaction() { }
 
-    public static Transaction newTransaction(List<String> inputAddresses, String outputAddress, BigInteger outputValue, Preference preference) {
+    public static Transaction newTransaction(List<String> inputAddresses, Map<String, BigInteger> outputValues, Preference preference) {
         Transaction tx = new Transaction();
         tx.inputs = new Input[inputAddresses.size()];
-        tx.outputs = new Output[] { new Output(outputValue, new String[]{outputAddress}) };
         for (int i = 0; i < inputAddresses.size(); i++) {
             tx.inputs[i] = new Input(new String[]{inputAddresses.get(i)});
+        }
+        tx.outputs = new Output[outputValues.size()];
+        int i = 0;
+        for (String outputAddress : outputValues.keySet()) {
+            tx.outputs[i++] = new Output(outputValues.get(outputAddress), new String[]{outputAddress});
         }
         tx.preference = preference.name();
         return tx;

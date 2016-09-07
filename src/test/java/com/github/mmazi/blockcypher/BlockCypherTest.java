@@ -4,6 +4,7 @@ import com.github.mmazi.blockcypher.data.AddressInfo;
 import com.github.mmazi.blockcypher.data.BlockCypherException;
 import com.github.mmazi.blockcypher.data.Transaction;
 import com.github.mmazi.blockcypher.data.TxSkeleton;
+import com.google.common.collect.ImmutableMap;
 import org.assertj.core.api.ThrowableAssert;
 import org.bitcoinj.core.Sha256Hash;
 import org.bitcoinj.crypto.DeterministicKey;
@@ -118,7 +119,8 @@ public class BlockCypherTest {
         log.debug("inputAddress = {}", inputAddress);
 
         List<String> inputAddresses = Collections.singletonList(inputAddress);
-        Transaction tx = Transaction.newTransaction(inputAddresses, "1LUJshaMHcArBDN8AM4bviKFVVRhSo73rB", new BigInteger("1000"), Transaction.Preference.high);
+        ImmutableMap<String, BigInteger> outputs = ImmutableMap.of("1LUJshaMHcArBDN8AM4bviKFVVRhSo73rB", new BigInteger("1000"));
+        Transaction tx = Transaction.newTransaction(inputAddresses, outputs, Transaction.Preference.high);
         TxSkeleton txSkeleton = bc.newTransaction(tx, true);
 
         TxSkeleton.Bytes[] toSign = txSkeleton.getTosign();
