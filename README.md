@@ -1,6 +1,6 @@
 # blockcypher-java
 
-An unofficical Java client for part of [BlockCuypher's API](http://dev.blockcypher.com).
+An unofficical Java client for part of [BlockCypher's API](http://dev.blockcypher.com).
 
 See [BlockCypher.java](/src/main/java/com/github/mmazi/blockcypher/BlockCypher.java) for which methods are implemented.
 
