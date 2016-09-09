@@ -5,11 +5,21 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.net.URISyntaxException;
+import java.text.SimpleDateFormat;
+import java.util.TimeZone;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BlockCypherJsonTest {
+
+    private SimpleDateFormat utcFormat;
+
+    {
+        utcFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        utcFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+    }
 
     @Test
     public void shouldDeserializeWallet() throws Exception {
@@ -43,17 +53,30 @@ public class BlockCypherJsonTest {
         assertThat(tx.getBlockHash()).isEqualTo("000000000000000003e41e1329997acbf1849f21eef94cefec2eaa3f94ff1360");
         assertThat(tx.getHash()).isEqualTo("3c8897ce06418a00a880e9d465365e01119252dbdfa39ed5906c4195e7db2682");
         assertThat(tx.getHash()).isEqualTo("3c8897ce06418a00a880e9d465365e01119252dbdfa39ed5906c4195e7db2682");
-        assertThat(tx.getTotal()).isEqualTo(63380642);
-        assertThat(tx.getFees()).isEqualTo(30000);
+        assertThat(tx.getTotal()).isEqualTo(new BigInteger("63380642"));
+        assertThat(tx.getFees().intValue()).isEqualTo(30000);
         assertThat(tx.isDoubleSpend()).isFalse();
         assertThat(tx.getConfirmed()).isInThePast();
         assertThat(tx.getReceived()).isInThePast();
     }
 
     @Test
-    public void shouldDeserializeException() throws Exception {
-        BlockCypherException ex = parse(BlockCypherException.class);
-        assertThat(ex).hasMessageContaining("Output exceeds max money value");
+    @SuppressWarnings("ThrowableResultOfMethodCallIgnored")
+    public void shouldDeserializeTxException() throws Exception {
+        BlockCypherTxException txe = parse(BlockCypherTxException.class);
+        assertThat(txe.getMessage()).contains("Error validating generated transaction: Output exceeds max money value.");
+
+        Transaction tx = txe.getTx();
+        assertThat(tx.getAddresses()).contains("mhqRXa1VBLFtpbRyyiouduv3zbPiKqi8v3");
+        assertThat(tx.getHash()).isEqualTo("94b9f54514feab03c5b600da8376f4b0110538820fa171262e761a0f0fe9e0ac");
+        assertThat(tx.getTotal()).isEqualTo(new BigInteger("18446744073709473205"));
+        assertThat(tx.getOutputs()).hasSize(1);
+        assertThat(tx.getOutputs()[0].getValue()).isEqualTo(new BigInteger("-78411"));
+        assertThat(tx.getInputs()).hasSize(33);
+        assertThat(tx.getInputs()[1].getOutputValue().intValue()).isEqualTo(819);
+        assertThat(tx.isDoubleSpend()).isFalse();
+        assertThat(utcFormat.format(tx.getReceived())).isEqualTo("2016-09-09T08:31:04");
+        assertThat(tx.getReceived()).isInThePast();
     }
 
     private static ObjectMapper createMapper() {

@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.github.mmazi.blockcypher.jackson.TimeDeserializer;
 
 import java.math.BigInteger;
 import java.util.Arrays;
@@ -92,6 +94,7 @@ public class Transaction {
     private BigInteger fees;
     private String relayedBy;
     private Date confirmed;
+    @JsonDeserialize(using = TimeDeserializer.class)
     private Date received;
     private Integer ver;
     private BigInteger lockTime;
