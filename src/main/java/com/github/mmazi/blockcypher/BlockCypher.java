@@ -2,6 +2,7 @@ package com.github.mmazi.blockcypher;
 
 import com.github.mmazi.blockcypher.data.AddressInfo;
 import com.github.mmazi.blockcypher.data.BlockCypherException;
+import com.github.mmazi.blockcypher.data.BlockCypherTxException;
 import com.github.mmazi.blockcypher.data.BlockCypherWallet;
 import com.github.mmazi.blockcypher.data.Confidence;
 import com.github.mmazi.blockcypher.data.Event;
@@ -175,7 +176,7 @@ public interface BlockCypher {
     @Path("/txs/new")
     @Consumes(MediaType.APPLICATION_JSON)
     TxSkeleton newTransaction(Transaction skeleton, @QueryParam("includeToSignTx") boolean includeToSignTx)
-            throws IOException, BlockCypherException;
+            throws IOException, BlockCypherTxException;
 
     @POST
     @Path("/txs/send")
