@@ -28,7 +28,7 @@ public class TimeDeserializer extends JsonDeserializer<Date> {
         try {
             return simpleDateFormat.parse(value);
         } catch (ParseException e) {
-            throw new InvalidFormatException(jp, "Can't parse date at offset " + e.getErrorOffset(), value, Date.class);
+            throw InvalidFormatException.from(jp, "Can't parse date at offset " + e.getErrorOffset(), value, Date.class);
             //      throw new RuntimeException("Can't parse date at offset " + e.getErrorOffset(), e);
         }
     }
