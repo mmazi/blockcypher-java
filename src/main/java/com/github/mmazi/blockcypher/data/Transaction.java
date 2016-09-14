@@ -93,6 +93,7 @@ public class Transaction {
     private BigInteger total;
     private BigInteger fees;
     private String relayedBy;
+    @JsonDeserialize(using = TimeDeserializer.class)
     private Date confirmed;
     @JsonDeserialize(using = TimeDeserializer.class)
     private Date received;

@@ -18,7 +18,7 @@ public class TimeDeserializer extends JsonDeserializer<Date> {
 
     {
         // Ignore fractional seconds as they mess stuff up. Don't know how to fix this.
-        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.");
+        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
     }
 
