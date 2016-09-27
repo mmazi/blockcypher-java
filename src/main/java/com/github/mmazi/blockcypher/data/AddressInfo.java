@@ -1,5 +1,6 @@
 package com.github.mmazi.blockcypher.data;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
@@ -9,6 +10,8 @@ import java.util.List;
 @JsonNaming(PropertyNamingStrategy.LowerCaseWithUnderscoresStrategy.class)
 public class AddressInfo {
     private String address;
+    private BlockCypherWallet wallet;
+    private BlockCypherWallet hdWallet;
     private BigInteger totalReceived;
     private BigInteger totalSent;
     private BigInteger balance;
@@ -19,6 +22,8 @@ public class AddressInfo {
     private Integer finalNTx;
     private List<Transaction> txs;
     private List<TxRef> txrefs;
+    private List<TxRef> unconfirmedTxrefs;
+    @JsonProperty("hasMore") private boolean hasMore;
 
     public String getAddress() {
         return address;
@@ -62,6 +67,22 @@ public class AddressInfo {
 
     public List<TxRef> getTxrefs() {
         return txrefs;
+    }
+
+    public BlockCypherWallet getWallet() {
+        return wallet;
+    }
+
+    public BlockCypherWallet getHdWallet() {
+        return hdWallet;
+    }
+
+    public List<TxRef> getUnconfirmedTxrefs() {
+        return unconfirmedTxrefs;
+    }
+
+    public boolean hasMore() {
+        return hasMore;
     }
 
     @Override

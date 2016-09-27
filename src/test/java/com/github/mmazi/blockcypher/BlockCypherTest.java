@@ -95,6 +95,9 @@ public class BlockCypherTest {
         assertThat(addressInfo.getAddress()).isEqualTo("173ujrhEVGqaZvPHXLqwXiSmPVMo225cqT");
         assertThat(addressInfo.getTotalReceived()).isGreaterThan(new BigInteger("100000000000"));
         assertThat(addressInfo.getTxs()).isNotNull().hasSize(33);
+        assertThat(addressInfo.hasMore()).isTrue();
+        assertThat(addressInfo.getWallet()).isNull();
+        assertThat(addressInfo.getHdWallet()).isNull();
     }
 
     @Test
