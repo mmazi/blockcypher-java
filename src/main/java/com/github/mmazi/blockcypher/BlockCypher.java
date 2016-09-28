@@ -218,6 +218,7 @@ public interface BlockCypher {
             @QueryParam("before") Integer beforeBlockHeight,
             @QueryParam("after") Integer afterBlockHeight,
             @QueryParam("limit") Integer limitTxs,
+            @QueryParam("txlimit") Integer limitInOutputs,
             @QueryParam("confirmations") Integer minConfirmations,
             @QueryParam("includeHex") Boolean includeHex,
             @QueryParam("includeConfidence") Boolean includeConfidence,

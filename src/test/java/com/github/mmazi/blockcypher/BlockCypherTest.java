@@ -88,14 +88,18 @@ public class BlockCypherTest {
 
     @Test
     public void shouldGetAddressFullInfo() throws Exception {
-        final AddressInfo addressInfo = bc.getAddressFullInfo("173ujrhEVGqaZvPHXLqwXiSmPVMo225cqT", null, null, 33, null, null, null, null);
+        final AddressInfo addressInfo = bc.getAddressFullInfo("33WDB3nsVHH5qafCAriPb8Jmb1e3ptsY4h", 429336, 429168, 50, 200, null, null, null, null);
 
         log.debug("addressInfo = {}", addressInfo);
 
-        assertThat(addressInfo.getAddress()).isEqualTo("173ujrhEVGqaZvPHXLqwXiSmPVMo225cqT");
+        assertThat(addressInfo.getAddress()).isEqualTo("33WDB3nsVHH5qafCAriPb8Jmb1e3ptsY4h");
         assertThat(addressInfo.getTotalReceived()).isGreaterThan(new BigInteger("100000000000"));
-        assertThat(addressInfo.getTxs()).isNotNull().hasSize(33);
-        assertThat(addressInfo.hasMore()).isTrue();
+        assertThat(addressInfo.hasMore()).isFalse();
+        assertThat(addressInfo.getTxs().size()).isGreaterThan(20);
+        for (Transaction transaction : addressInfo.getTxs()) {
+            assertThat(transaction.getInputs()).isNotEmpty();
+            assertThat(transaction.getNextInputs()).isNull();
+        }
         assertThat(addressInfo.getWallet()).isNull();
         assertThat(addressInfo.getHdWallet()).isNull();
     }

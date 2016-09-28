@@ -109,6 +109,8 @@ public class Transaction {
     private String preference;
     private boolean doubleSpend;
     private String doubleSpendTx;
+    private String nextInputs;
+    private String nextOutputs;
 
     private Input[] inputs;
     private Output[] outputs;
@@ -218,6 +220,14 @@ public class Transaction {
 
     public Output[] getOutputs() {
         return outputs;
+    }
+
+    public String getNextInputs() {
+        return nextInputs;
+    }
+
+    public String getNextOutputs() {
+        return nextOutputs;
     }
 
     public enum Preference { high, medium, low }
