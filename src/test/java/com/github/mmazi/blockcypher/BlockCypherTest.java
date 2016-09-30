@@ -32,7 +32,7 @@ public class BlockCypherTest {
     private BlockCypher bc = RestProxyFactory.createProxy(BlockCypher.class, "https://api.blockcypher.com/v1/btc/main/");
 
     @SuppressWarnings("ThrowableResultOfMethodCallIgnored")
-    @Test
+    @Test(enabled = false)
     public void getWalletShouldFailWithNonexistentWalletName() throws Exception {
         BlockCypherException throwable = (BlockCypherException)catchThrowable(new ThrowableAssert.ThrowingCallable() {
             public void call() throws Throwable {
@@ -46,7 +46,7 @@ public class BlockCypherTest {
         assertThat(throwable.getHttpStatusCode()).isEqualTo(404);
     }
 
-    @Test
+    @Test(enabled = false)
     public void shouldGetTransaction() throws Exception {
         final String hash = "3c8897ce06418a00a880e9d465365e01119252dbdfa39ed5906c4195e7db2682";
         final Transaction tx = bc.getTransaction(hash, false, null);
@@ -57,7 +57,7 @@ public class BlockCypherTest {
         //assertThat(tx.getConfidence()).isNull(); // Currently still returned even with includeConfidence = false.
     }
 
-    @Test
+    @Test(enabled = false)
     public void shouldGetTransactions() throws Exception {
         final List<Transaction> tx = bc.getTransactions(new BlockCypher.Strings(
                 Arrays.asList("3c8897ce06418a00a880e9d465365e01119252dbdfa39ed5906c4195e7db2682", "3c8897ce06418a00a880e9d465365e01119252dbdfa39ed5906c4195e7db2682")
@@ -66,7 +66,7 @@ public class BlockCypherTest {
         assertThat(tx).hasSize(2);
     }
 
-    @Test
+    @Test(enabled = false)
     public void shouldGetTransactionWithConfidence() throws Exception {
         final String hash = "3c8897ce06418a00a880e9d465365e01119252dbdfa39ed5906c4195e7db2682";
         final Transaction tx = bc.getTransaction(hash, true, TOKEN);
@@ -76,7 +76,7 @@ public class BlockCypherTest {
         assertThat(tx.getConfidence()).isNotNull();
     }
 
-    @Test
+    @Test(enabled = false)
     public void shouldGetAddressBalance() throws Exception {
         final AddressInfo balance = bc.getAddressBalance("173ujrhEVGqaZvPHXLqwXiSmPVMo225cqT");
 
@@ -86,7 +86,7 @@ public class BlockCypherTest {
         assertThat(balance.getTotalReceived()).isGreaterThan(new BigInteger("100000000000"));
     }
 
-    @Test
+    @Test(enabled = false)
     public void shouldGetAddressFullInfo() throws Exception {
         final AddressInfo addressInfo = bc.getAddressFullInfo("33WDB3nsVHH5qafCAriPb8Jmb1e3ptsY4h", 429336, 429168, 50, 200, null, null, null, null);
 
@@ -104,7 +104,7 @@ public class BlockCypherTest {
         assertThat(addressInfo.getHdWallet()).isNull();
     }
 
-    @Test
+    @Test(enabled = false)
     public void shouldGetAddressInfo() throws Exception {
         final AddressInfo addressInfo = bc.getAddressInfo("3KbWWjumBGLBUWYCeidydxe1uET9QyWoEg", null, null, 33, null, null, null);
 

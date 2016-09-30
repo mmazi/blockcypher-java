@@ -16,7 +16,7 @@ public class BlockCypherEthTest {
 
     private BlockCypher bc = RestProxyFactory.createProxy(BlockCypher.class, "https://api.blockcypher.com/v1/eth/main/");
 
-    @Test
+    @Test(enabled = false)
     public void shouldGetAddressInfo() throws Exception {
         final AddressInfo addressInfo = bc.getAddressInfo("154af3e01ec56bc55fd585622e33e3dfb8a248d8", null, null, 33, null, null, null);
 
