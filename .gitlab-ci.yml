@@ -1,0 +1,17 @@
+stages:
+  - build
+
+build:
+  image: maven
+  stage: build
+  script:
+    - mvn install
+    - mv target/blockcypher-client-*.jar .
+  artifacts:
+    paths:
+      - blockcypher-client-*.jar
+      - pom.xml
+  only:
+    - master
+    - /^v.*$/
+    - production
