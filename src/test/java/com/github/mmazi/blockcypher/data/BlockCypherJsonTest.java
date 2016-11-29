@@ -2,6 +2,8 @@ package com.github.mmazi.blockcypher.data;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -13,6 +15,8 @@ import java.util.TimeZone;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BlockCypherJsonTest {
+
+    private static final Logger log = LoggerFactory.getLogger(BlockCypherJsonTest.class);
 
     private SimpleDateFormat utcFormat;
 
@@ -50,6 +54,7 @@ public class BlockCypherJsonTest {
     @Test
     public void shouldDeserializeTransaction() throws Exception {
         Transaction tx = parse(Transaction.class);
+        log.debug("tx = {}", tx);
         assertThat(tx.getBlockHash()).isEqualTo("000000000000000003e41e1329997acbf1849f21eef94cefec2eaa3f94ff1360");
         assertThat(tx.getHash()).isEqualTo("3c8897ce06418a00a880e9d465365e01119252dbdfa39ed5906c4195e7db2682");
         assertThat(tx.getHash()).isEqualTo("3c8897ce06418a00a880e9d465365e01119252dbdfa39ed5906c4195e7db2682");
@@ -57,7 +62,9 @@ public class BlockCypherJsonTest {
         assertThat(tx.getFees().intValue()).isEqualTo(30000);
         assertThat(tx.isDoubleSpend()).isFalse();
         assertThat(tx.getConfirmed()).isInThePast();
+        assertThat(utcFormat.format(tx.getConfirmed())).isEqualTo("2016-01-28T08:51:20");
         assertThat(tx.getReceived()).isInThePast();
+        assertThat(utcFormat.format(tx.getReceived())).isEqualTo("2016-01-28T08:40:23");
     }
 
     @Test
