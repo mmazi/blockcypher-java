@@ -127,7 +127,7 @@ public class BlockCypherTest {
 
         List<String> inputAddresses = Collections.singletonList(inputAddress);
         ImmutableMap<String, BigInteger> outputs = ImmutableMap.of("1LUJshaMHcArBDN8AM4bviKFVVRhSo73rB", new BigInteger("1000"));
-        Transaction tx = Transaction.newTransaction(inputAddresses, outputs, Transaction.Preference.high);
+        Transaction tx = Transaction.newTransaction(inputAddresses, outputs, Transaction.Preference.high, 0);
         TxSkeleton txSkeleton = bc.newTransaction(tx, true);
 
         TxSkeleton.Bytes[] toSign = txSkeleton.getTosign();

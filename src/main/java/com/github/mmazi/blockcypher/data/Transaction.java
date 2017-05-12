@@ -117,7 +117,12 @@ public class Transaction {
 
     protected Transaction() { }
 
-    public static Transaction newTransaction(List<String> inputAddresses, Map<String, BigInteger> outputValues, Preference preference) {
+    public static Transaction newTransaction(
+            List<String> inputAddresses,
+            Map<String, BigInteger> outputValues,
+            Preference preference,
+            int requiredUtxoConfirmations
+    ) {
         Transaction tx = new Transaction();
         tx.inputs = new Input[inputAddresses.size()];
         for (int i = 0; i < inputAddresses.size(); i++) {
@@ -129,6 +134,7 @@ public class Transaction {
             tx.outputs[i++] = new Output(outputValues.get(outputAddress), new String[]{outputAddress});
         }
         tx.preference = preference.name();
+        tx.confirmations = requiredUtxoConfirmations;
         return tx;
     }
 
